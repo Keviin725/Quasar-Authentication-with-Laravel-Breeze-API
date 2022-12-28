@@ -15,15 +15,16 @@
         </q-card-section>
         <q-card-section class="">
 
-            <q-form @submit.prevent.stop="onSubmit" class="">
+            <q-form @submit.prevent="onSubmit" class="">
               <q-input
+                type="email"
                 rounded
                 clear-icon="close"
                 clearable
                 outlined
                 v-model="form.email"
                 color="primary"
-                label="Username"
+                label="Email"
                 class="col-md-12 col-sm-12 col-xs-12"
                 :rules="[
                   (val) =>
@@ -39,6 +40,7 @@
                 clear-icon="close"
                 clearable
                 outlined
+                type="password"
                 v-model="form.password"
                 color="primary"
                 label="Password"
@@ -77,19 +79,32 @@
 
 <script>
 import { ref } from "vue";
+import { api } from "src/boot/axios";
+
 
 export default {
   name: "PageIndex",
   data() {
     return {
-      form: {
-        password: ref(null),
-        email: ref(null),
-      },
+      form:ref({
+        email:'',
+        password:''
+      })
     };
   },
   methods: {
-    onSubmit() {},
+   async onSubmit() {
+      await api.post('/login', this.form).then(response=>{
+
+        console.log(response)
+
+        this.$router.push('/')
+
+      }).catch(error=>{
+        console.log(error)
+      })
+
+   },
   },
 };
 </script>

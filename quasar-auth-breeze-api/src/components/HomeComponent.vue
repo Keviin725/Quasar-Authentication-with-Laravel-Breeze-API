@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted} from 'vue'
 import NavComponent from '../components/NavComponent.vue'
 import {api} from 'src/boot/axios';
 
@@ -21,24 +21,20 @@ export default defineComponent({
   components: { NavComponent },
 
   data(){
-    const user = ref()
+
+
+    onMounted(async () =>{
+      await api.get('/api/user').then(response =>{
+        //const token = localStorage.setItem('token', response.data.token)
+        console.log(response)
+      }).catch(error=>{
+        console.log(error)
+      })
+    })
     return{
 
     }
   },
-
-
-    async mounted(){
-      await api.get('/api/user').then(response=>{
-
-        console.log(response)
-      }
-      ).catch(error=>{
-
-        console.log(error)
-      }
-      )
-    }
 
 })
 </script>
