@@ -1,9 +1,14 @@
 <template>
-  <q-page>
-   <nav-component/>
-   <router-view/>
+  <q-layout view="lHh Lpr lFf" class="q-pa-lg">
 
-  </q-page>
+    <nav-component/>
+
+   <q-page-container>
+      <router-view />
+    </q-page-container>
+
+
+  </q-layout>
 </template>
 
 <script>
@@ -12,6 +17,5 @@ import NavComponent from '../components/NavComponent.vue'
 
 export default defineComponent({
   components: { NavComponent },
-  name: 'IndexPage'
 })
 </script>

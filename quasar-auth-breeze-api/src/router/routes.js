@@ -1,10 +1,12 @@
-
+import HomeComponent from '../components/HomeComponent.vue'
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: HomeComponent,
+    name:'home',
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '/login',name:'login', component: () => import('../components/LoginComponent.vue') },
+      { path: '/register',name:'register', component: () => import('../components/RegisterComponent.vue') },
     ]
   },
 
