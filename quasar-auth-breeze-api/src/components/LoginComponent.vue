@@ -1,8 +1,7 @@
 <template>
-  <q-page class="container" padding>
-    <div class="row justify-center">
+  <q-page class="container row justify-center q-pa-xl" padding>
 
-      <q-card class="my-card q-ma-md" style="height: 450px; width: 450px;">
+      <q-card class="my-card" style="height: 65vh; width: 50vh;">
         <q-item class="justify-center">
           <q-item-section avatar>
             <q-avatar size="75px">
@@ -32,7 +31,7 @@
                 ]"
               >
                 <template v-slot:prepend>
-                  <q-icon name="person"></q-icon>
+                  <q-icon name="mail"></q-icon>
                 </template>
               </q-input>
               <q-input
@@ -56,21 +55,26 @@
               </q-input>
             </q-form>
 
+            <div>
               <router-link class="row justify-center" to="#">Forgot Password</router-link>
               <router-link class="row justify-center" to="/register">Sign up</router-link>
-            <q-btn
-              class="col-md-12"
-              label="Submit"
-              type="submit"
-              rounded
-              color="primary"
-              padding
-              @click="onSubmit()"
-            />
+            </div>
+
+            <div>
+              <q-btn
+                label="Submit"
+                type="submit"
+                rounded
+                color="primary"
+                padding
+                @click="onSubmit()"
+              />
+            </div>
+
         </q-card-section>
 
       </q-card>
-    </div>
+
 
 
 

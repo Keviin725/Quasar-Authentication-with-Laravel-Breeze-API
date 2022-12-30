@@ -1,9 +1,8 @@
 <template>
-  <q-page class="container" padding>
-    <div class="row justify-center">
+  <q-page class="container row justify-center" padding>
 
-      <q-card class="my-card q-ma-md" style="height: 450px; width: 450px;">
-        <q-item class="justify-center q-ma-md">
+      <q-card class="my-card" style="height: 85vh; width: 50vh;">
+        <q-item class="justify-center q-ma-sm">
           <q-item-section avatar>
             <q-avatar size="75px">
               <img src="https://cdn.quasar.dev/img/avatar2.jpg">
@@ -21,9 +20,10 @@
                 clear-icon="close"
                 clearable
                 outlined
-                v-model="form.email"
+                v-model="form.name"
                 color="primary"
-                label="Username"
+                label="Name"
+                type="text"
                 class="col-md-12 col-sm-12 col-xs-12"
                 :rules="[
                   (val) =>
@@ -39,9 +39,48 @@
                 clear-icon="close"
                 clearable
                 outlined
+                type="email"
+                v-model="form.email"
+                color="primary"
+                label="Email"
+                class="col-md-12 col-sm-12 col-xs-12"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Preencha o devidamente os campos',
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="mail"></q-icon>
+                </template>
+              </q-input>
+              <q-input
+                rounded
+                clear-icon="close"
+                clearable
+                outlined
+                type="password"
                 v-model="form.password"
                 color="primary"
                 label="Password"
+                class="col-md-12 col-sm-12 col-xs-12"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Preencha o devidamente os campos',
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="key"></q-icon>
+                </template>
+              </q-input>
+              <q-input
+                rounded
+                clear-icon="close"
+                clearable
+                outlined
+                type="password"
+                v-model="form.cpassword"
+                color="primary"
+                label="Confirm Password"
                 class="col-md-12 col-sm-12 col-xs-12"
                 :rules="[
                   (val) =>
@@ -66,7 +105,6 @@
         </q-card-section>
 
       </q-card>
-    </div>
 
 
 
@@ -74,6 +112,7 @@
 </template>
 
 <script>
+import { api } from "src/boot/axios";
 import { ref } from "vue";
 
 export default {
@@ -83,11 +122,19 @@ export default {
       form: {
         password: ref(null),
         email: ref(null),
+        cpassword: ref(null)
       },
     };
   },
   methods: {
-    onSubmit() {},
+    async onSubmit() {
+      await api.post('/register', this.form).then(response=>{
+        console.log(response)
+        this.$router.push('/')
+      }).catch(error=>{
+        console.log(error)
+      })
+    },
   },
 };
 </script>

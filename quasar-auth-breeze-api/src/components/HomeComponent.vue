@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="q-pa-lg">
+  <q-layout view="lHh Lpr lFf" class="q-pa-lg bg-grey-4">
 
     <nav-component/>
 
@@ -7,7 +7,11 @@
       <router-view />
     </q-page-container>
 
-
+    <q-footer class="bg-grey absolute-bottom">
+        <q-toolbar>
+          <q-toolbar-title class="text-grey-9 row justify-end">Kevin Machava &copy; All rights reserved 2022</q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
   </q-layout>
 </template>
 
