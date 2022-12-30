@@ -28,8 +28,9 @@ export default defineComponent({
 
 
     onMounted(async () =>{
+      
       await api.get('/api/user').then(response =>{
-        //const token = localStorage.setItem('token', response.data.token)
+
         console.log(response)
       }).catch(error=>{
         console.log(error)

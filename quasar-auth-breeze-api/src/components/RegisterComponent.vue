@@ -128,6 +128,7 @@ export default {
   },
   methods: {
     async onSubmit() {
+     await this.getToken()
       await api.post('/register', this.form).then(response=>{
         console.log(response)
         this.$router.push('/')
@@ -135,6 +136,9 @@ export default {
         console.log(error)
       })
     },
+    async getToken(){
+      await api.get('/sanctum/csrf-cookie')
+    }
   },
 };
 </script>
