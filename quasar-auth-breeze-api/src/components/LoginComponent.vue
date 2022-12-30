@@ -12,7 +12,7 @@
         Login
       </q-card-section>
       <q-card-section class="">
-        <q-form @submit.prevent="onSubmit" class="">
+        <q-form @submit.prevent="authStore.handleLogin(form)">
           <q-input
             type="email"
             rounded
@@ -64,12 +64,12 @@
 
         <div>
           <q-btn
-            label="Submit"
+            label="Login"
             type="submit"
             rounded
             color="primary"
             padding
-            @click="onSubmit()"
+            @click="authStore.handleLogin(form)"
           />
         </div>
       </q-card-section>
@@ -79,35 +79,24 @@
 
 <script>
 import { ref } from "vue";
-import { api } from "src/boot/axios";
+import { useAuthStore } from "src/stores/auth";
 
 export default {
   name: "PageIndex",
+
   data() {
+    const authStore = useAuthStore()
+    const form = ref({
+      email: "",
+      password: "",
+    })
     return {
-      form: ref({
-        email: "",
-        password: "",
-      }),
+      authStore,
+      form
     };
   },
   methods: {
-    async onSubmit() {
-      await this.getToken();
-      await api.post("/login", this.form)
-        .then((response) => {
-          console.log(response);
 
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    async getToken() {
-      await api.get("/sanctum/csrf-cookie");
-    },
   },
 };
 </script>

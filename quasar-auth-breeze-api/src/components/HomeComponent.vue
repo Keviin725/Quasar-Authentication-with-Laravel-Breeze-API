@@ -2,6 +2,17 @@
   <q-layout view="lHh Lpr lFf" class="q-pa-lg bg-grey-4">
 
     <nav-component/>
+    <!--
+
+      <div v-if="authStore.user">
+        <h1>{{ authStore.user.name }}</h1>
+        <p>{{ authStore.user.email }}</p>
+      </div>
+
+      <div v-else>
+        <h1>User Not Found</h1>
+      </div>
+    -->
 
    <q-page-container>
       <router-view />
@@ -16,30 +27,25 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted} from 'vue'
+import { defineComponent, } from 'vue'
 import NavComponent from '../components/NavComponent.vue'
-import {api} from 'src/boot/axios';
+import{useAuthStore} from '../stores/auth'
 
 
 export default defineComponent({
   components: { NavComponent },
 
-  data(){
+  methods:{
 
+    async onMounted(){
+      const authStore = useAuthStore()
 
-    onMounted(async () =>{
-      
-      await api.get('/api/user').then(response =>{
-
-        console.log(response)
-      }).catch(error=>{
-        console.log(error)
-      })
-    })
-    return{
-
+      await authStore.getUser()
     }
   },
+  mounted(){
+    this.onMounted()
+  }
 
 })
 </script>
