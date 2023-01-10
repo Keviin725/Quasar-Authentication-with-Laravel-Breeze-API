@@ -32,6 +32,9 @@
               <q-icon name="mail"></q-icon>
             </template>
           </q-input>
+          <div v-if="authStore.errors.email" class="flex">
+            <span class=" text-red text-sm">{{ authStore.errors.email[0] }}</span>
+          </div>
           <q-input
             rounded
             clear-icon="close"
@@ -51,7 +54,13 @@
               <q-icon name="key"></q-icon>
             </template>
           </q-input>
+
+          <div v-if="authStore.errors.password" class="flex">
+            <span class=" text-red text-sm">{{ authStore.errors.password[0] }}</span>
+          </div>
         </q-form>
+
+
 
         <div>
           <router-link class="row justify-center" to="#"

@@ -11,11 +11,12 @@
           <q-route-tab :to="{name: 'register'}" name="register" label="Register" />
         </q-tabs>
 
-        TODO:
         <!---
+          TODO:
           <template v-if="!authStore.user">
 
           </template>
+          
           <template v-else>
             <q-btn @click= authStore.handleLogout()>
               logout

@@ -3,10 +3,12 @@ import { api } from "src/boot/axios";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    authUser: null
+    authUser: null,
+    authErrors:[]
   }),
   getters:{
-    user: (state) => state.authUser
+    user: (state) => state.authUser,
+    errors: (state) => state.authErrors
   },
   actions:{
     async getToken(){
@@ -18,27 +20,56 @@ export const useAuthStore = defineStore('auth', {
       this.authUser = data.data
     },
     async handleLogin(data) {
+      this.authErrors = []
       await this.getToken();
-      await api.post("/login",{
-        email: data.email,
-        password: data.password
-      }),
-      this.$router.push('/')
+      try {
+        await api.post("/login",{
+          email: data.email,
+          password: data.password
+        }),
+        this.$router.push('/')
+      } catch (error) {
+        if(error.response.status === 422){
+          this.authErrors = error.response.data.errors
+        }
+      }
 
     },
     async handleRegister(data) {
+      this.authErrors = []
       await this.getToken()
-      await api.post('/register', {
-        email: data.email,
-        password: data.password,
-        cpassword: data.cpassword
-      })
-      this.$router.push('/')
+      try {
+        await api.post('/register', {
+          email: data.email,
+          password: data.password,
+          cpassword: data.cpassword
+        })
+        this.$router.push('/')
+      } catch (error) {
+        if(error.response.status === 422){
+          this.authErrors = error.response.data.errors
+        }
+      }
 
     },
     async handleLogout(){
       await api.post('/logout')
       this.authUser = null
+    },
+
+    async handleForgotPassword(email){
+      this.authErrors = [],
+      this.getToken()
+
+      try {
+        await api.post('/forgot-password', {
+          email: email
+        })
+      } catch (error) {
+        if(error.response.status === 422){
+          this.authErrors = error.response.data.errors
+        }
+      }
     }
   }
 })
